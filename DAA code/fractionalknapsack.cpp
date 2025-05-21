@@ -17,14 +17,19 @@ double frac_knapsack(vector<item> arr, int w) {
     sort(arr.begin(), arr.end(), cmp);
     double total = 0.0;
 
+    cout << "Items taken (profit, weight):\n";
+
     for (auto it : arr) {
         if (w == 0) break;
 
         if (it.weight <= w) {
             total += it.profit;
             w -= it.weight;
+            cout << "  Taken full item: (" << it.profit << ", " << it.weight << ")\n";
         } else {
-            total += (double)it.profit * w / it.weight;
+            double fraction = (double)w / it.weight;
+            total += it.profit * fraction;
+            cout << "  Taken fraction " << fraction << " of item: (" << it.profit << ", " << it.weight << ")\n";
             w = 0;
         }
     }
@@ -37,7 +42,7 @@ int main() {
     int w = 50;
 
     double ans = frac_knapsack(arr, w);
-    cout << "max profit: " << ans << endl;
+    cout << "Max profit: " << ans << endl;
 
     return 0;
 }
